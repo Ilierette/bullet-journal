@@ -95,7 +95,7 @@ export const DayPage = observer(() => {
                               {supply.title}
                             </td>
                             <td>
-                              <button className={supply.checked ? "btn btn-success mx-3" : "btn btn-secondary mx-3"} onClick={() => supply.checked = !supply.checked}></button>
+                              <button className={supply.checked ? "btn btn-success mx-3" : "btn btn-outline-dark mx-3"} onClick={() => supply.checked = !supply.checked}></button>
                             </td>
                           </tr>
                         ))
@@ -118,7 +118,7 @@ export const DayPage = observer(() => {
                           <tr>
                             <td>{water.title}</td>
                             <td>
-                              <button className={water.checked ? "btn btn-success mx-3" : "btn btn-secondary mx-3"} onClick={() => water.checked = !water.checked}></button>
+                              <button className={water.checked ? "btn btn-success mx-3" : "btn btn-outline-dark mx-3"} onClick={() => water.checked = !water.checked}></button>
                             </td>
                             <td>
                               <span>
