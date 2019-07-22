@@ -2,12 +2,12 @@
     "compilerOptions": {
         "outDir": "./",
         "sourceMap": true,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "module": "commonjs",
-        "target": "es6",
+        "target": "es5",
         "jsx": "react",
-        "lib": ["es5", "es6", "dom"],
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "resolveJsonModule": true
     },
     "include": [
         "./**/*"

@@ -1,21 +1,49 @@
 var path = require('path');
+var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const AssetsPlugin = require('assets-webpack-plugin');
-const assetsPluginInstance = new AssetsPlugin();
+
+var production = false;
+var stage = false;
+var environment = 'development';
+
+var getOutputPath = () => {
+    return (production) ? path.resolve(__dirname, 'dist') : (stage) ? path.resolve(__dirname, 'stage') : path.resolve(__dirname, 'tmp');
+}
+
+var API_URL = {
+    production: JSON.stringify('https://maple.com.pl'),
+    stage: JSON.stringify('https://test.maple.com.pl'),
+    development: JSON.stringify('http://localhost:63155')
+}
 
 module.exports = function (env) {
+
+    if (typeof (env) != 'undefined') {
+        production = env.prod;
+        stage = env.stage;
+        environment = env.stage ? 'stage' : 'production';
+        console.log(`Starting ${environment} build ...`);
+    } else {
+        console.log(`Starting development server ...`);
+    }
+
     return {
+
+        mode: environment,
+
         entry: {
             index: "./src/app.tsx"
         },
-        devtool: 'inline-source-map',
 
         output: {
-            path: path.join(__dirname, 'public'),
-            filename: '[hash].js',
-            chunkFilename: '[chunkhash].js',
+            filename: "[name].js",
+            path: getOutputPath(),
+            libraryTarget: 'window'
         },
+
+        // Enable sourcemaps for debugging webpack's output.
+        devtool: (production || stage) ? false : "source-map",
 
         resolve: {
             // Add '.ts' and '.tsx' as resolvable extensions.
@@ -24,7 +52,6 @@ module.exports = function (env) {
 
         module: {
             rules: [
-                // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
                 {
                     test: /\.tsx?$/,
                     use: [
@@ -43,13 +70,19 @@ module.exports = function (env) {
                     use: ExtractTextPlugin.extract({
                         fallback: 'style-loader',
                         use: [{
-                            loader: "css-loader"
+                            loader: "css-loader", options: {
+                                sourceMap: !production
+                            },
                         },
                         {
-                            loader: "postcss-loader"
+                            loader: "postcss-loader", options: {
+                                sourceMap: !production
+                            },
                         },
                         {
-                            loader: "sass-loader"
+                            loader: "sass-loader", options: {
+                                sourceMap: !production
+                            }
                         }]
 
                     })
@@ -71,16 +104,21 @@ module.exports = function (env) {
             new ExtractTextPlugin("[name].css"),
             new HtmlWebpackPlugin({
                 filename: 'index.html',
-                template: 'src/tpl/index.html'
+                template: 'src/tpl/index.html',
+                minify: production,
+                hash: production,
+                title: 'React.TS Kickstarter (change me)'
             }),
-            assetsPluginInstance
+            new webpack.DefinePlugin({
+                'REACT_APP_API_URL': API_URL[environment]
+            })
         ],
         devServer: {
             contentBase: path.join(__dirname, 'tmp'),
             host: 'localhost',
-            port: 4000,
+            port: 5000,
             historyApiFallback: true,
-            open: 'http://localhost:4000'
+            open: 'http://localhost:5000'
         }
     }
 }
