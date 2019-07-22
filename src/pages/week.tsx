@@ -8,7 +8,7 @@ export const WeekPage = () => {
         <div className="col">
           <h1>Widok tygodniowy</h1>
           <ul>
-            <li>wykresy cyklu - (integracja z daysy)</li>
+            <li>wykresy cyklu - (integracja z daysy "brak api")</li>
             <li>
               tracker
               <ul>

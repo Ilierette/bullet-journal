@@ -8,9 +8,9 @@ export const MonthPage = () => {
         <div className="col">
           <h1>Widok miesięczny</h1>
           <ul>
-            <li>wykresy cyklu - (integracja z daysy)</li>
+            <li>wykresy cyklu - (integracja z daysy "brak api")</li>
             <li>dodawanie wydarzeń - (integracja z google calendar)</li>
-            <li>posumowanie posiłków - (integracja z cronometer)</li>
+            <li>posumowanie posiłków - (integracja z cronometer "brak api")</li>
             <li>podsumownaie aktywności - (integracja z fitbit)</li>
           </ul>
           <hr/>
