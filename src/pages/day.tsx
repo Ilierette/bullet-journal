@@ -1,62 +1,15 @@
 import * as React from 'react';
 import { useObservable, observer } from 'mobx-react-lite';
-
-const supply = [
-  {
-    title: "B12",
-    checked: false
-  },
-  {
-    title: "D3+K2",
-    checked: false
-  },
-  {
-    title: "Magnez",
-    checked: false
-  },
-  {
-    title: "Omega 3",
-    checked: false
-  },
-  {
-    title: "Kolagen",
-    checked: false
-  },
-  {
-    title: "Glutation",
-    checked: false
-  }
-]
-const water = [
-  {
-    title: "0.5",
-    checked: false,
-    time: "8-12"
-  },
-  {
-    title: "0.5",
-    checked: false,
-    time: "12-16"
-  },
-  {
-    title: "0.5",
-    checked: false,
-    time: "16-20"
-  },
-  {
-    title: "0.5",
-    checked: false,
-    time: "20-23"
-  }
-]
+import { supply, water, workout } from '../sample';
 
 export const DayPage = observer(() => {
   const state = useObservable({
     supply: supply,
-    water: water
+    water: water,
+    workout: workout
   })
   return (
-    <div className="container-fluid">
+    <div className="container-fluid my-5">
       <div className="row">
         <div className="col-12">
           <h1>Widok dzienny “typu bullet journal”</h1>
@@ -86,7 +39,7 @@ export const DayPage = observer(() => {
                   Suplementy
                 </div>
                 <div className="card-body">
-                  <table>
+                  <table className="table table-sm table-bordered">
                     <tbody>
                       {
                         state.supply.map((supply) => (
@@ -95,7 +48,7 @@ export const DayPage = observer(() => {
                               {supply.title}
                             </td>
                             <td>
-                              <button className={supply.checked ? "btn btn-success mx-3" : "btn btn-outline-dark mx-3"} onClick={() => supply.checked = !supply.checked}></button>
+                              <button className={supply.checked ? "btn btn-success  " : "btn btn-outline-dark  "} onClick={() => supply.checked = !supply.checked}></button>
                             </td>
                           </tr>
                         ))
@@ -111,14 +64,14 @@ export const DayPage = observer(() => {
                   Woda
                 </div>
                 <div className="card-body">
-                  <table>
+                  <table className="table table-sm table-bordered">
                     <tbody>
                       {
                         state.water.map((water) => (
                           <tr>
                             <td>{water.title}</td>
                             <td>
-                              <button className={water.checked ? "btn btn-success mx-3" : "btn btn-outline-dark mx-3"} onClick={() => water.checked = !water.checked}></button>
+                              <button className={water.checked ? "btn btn-success  " : "btn btn-outline-dark  "} onClick={() => water.checked = !water.checked}></button>
                             </td>
                             <td>
                               <span>
@@ -153,14 +106,41 @@ export const DayPage = observer(() => {
                   Dzień treningowy
                 </div>
                 <div className="card-body">
-                  <ul>
-                    <li>
-                      rodzaj ćwiczenia, podnoszone ciężary, ilość powtórzeń
-                    </li>
-                    <li>
-                      filmy z ćwiczeniami
-                    </li>
-                  </ul>
+                  <table className="table table-sm table-bordered">
+                    <thead>
+                      <tr>
+                        <td>
+                          {state.workout[0].title}
+                        </td>
+                        <td>
+                          Ciężar
+                        </td>
+                        <td>
+                          Serie / powtórzenia
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        state.workout[0].dates[0].exercises.map((exercise, id) => (
+                          <tr>
+                            <td>
+                              {state.workout[0].exercises[id].title}
+                            </td>
+                            <td className="text-center">
+                              {exercise.weights}
+                            </td>
+                            <td className="text-center">
+                              {exercise.series} / {exercise.tries}
+                            </td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                  <div className="mt-2">
+                    filmy z ćwiczeniami
+                  </div>
                 </div>
               </div>
             </div>
@@ -187,10 +167,19 @@ export const DayPage = observer(() => {
                 </div>
               </div>
             </div>
-            <div className="col-12">
+            <div className="col-12 mb-2">
               <div className="card h-100">
                 <div className="card-header">
                   Priorytety
+                </div>
+                <div className="card-body">
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="card h-100">
+                <div className="card-header">
+                  To do
                 </div>
                 <div className="card-body">
                 </div>
